@@ -22,7 +22,7 @@ const Home = ({
 }: NativeStackScreenProps<RootStackParamList, "Home">) => {
     return (
         <SafeAreaView className="flex h-full items-center justify-center bg-white">
-            <Text>Hello, world!</Text>
+            <Text className="font-outfit text-5xl font-bold">carboscan</Text>
             <Button
                 title="Another page"
                 onPress={() => navigation.navigate("CameraScreen")}
