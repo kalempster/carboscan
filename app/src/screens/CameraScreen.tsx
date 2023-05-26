@@ -13,7 +13,6 @@ import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { RootStackParamList } from "../App";
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { log } from "react-native-reanimated";
 
 const CameraScreen = ({
     navigation
@@ -39,10 +38,6 @@ const CameraScreen = ({
     );
 
     useEffect(() => {
-        // console.log(barcodes);
-    }, [barcodes]);
-
-    useEffect(() => {
         (async () => {
             const status = await PermissionsAndroid.request(
                 "android.permission.CAMERA"
@@ -52,9 +47,17 @@ const CameraScreen = ({
                 case "denied":
                     Alert.alert(
                         "Camera permission",
-                        "You need to provide permission to use a camera"
+                        "You need to provide permission to use a camera",
+                        [
+                            {
+                                text: "Allow",
+                                onPress() {
+                                    Linking.openSettings();
+                                    navigation.navigate("Dashboard");
+                                }
+                            }
+                        ]
                     );
-
                     break;
 
                 case "never_ask_again":
@@ -66,7 +69,7 @@ const CameraScreen = ({
                                 text: "Allow",
                                 onPress() {
                                     Linking.openSettings();
-                                    navigation.navigate("Home");
+                                    navigation.navigate("Dashboard");
                                 }
                             }
                         ]

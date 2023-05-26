@@ -10,6 +10,7 @@
         "format": "prettier --write ."
     },
     "dependencies": {
+        "@react-native-async-storage/async-storage": "^1.18.1",
         "@react-navigation/native": "^6.1.6",
         "@react-navigation/native-stack": "^6.9.12",
         "babel-plugin-inline-import": "^3.0.0",
@@ -22,7 +23,8 @@
         "react-native-screens": "^3.20.0",
         "react-native-svg": "^13.9.0",
         "react-native-vision-camera": "^2.15.4",
-        "vision-camera-code-scanner": "^0.2.0"
+        "vision-camera-code-scanner": "^0.2.0",
+        "zustand": "^4.3.8"
     },
     "devDependencies": {
         "@babel/core": "^7.20.0",

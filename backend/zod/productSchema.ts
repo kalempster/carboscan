@@ -16,3 +16,5 @@ export const productSchema = zObject<Product>({
     description: z.string(),
     name: z.string()
 });
+
+export type ProductSchemaType = z.infer<typeof productSchema>;

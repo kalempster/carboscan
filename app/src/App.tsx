@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { GetStartedScreen1 } from "./screens/GetStartedScreens/GetStartedScreen1";
 import { GetStartedScreen2 } from "./screens/GetStartedScreens/GetStartedScreen2";
 import { GetStartedScreen3 } from "./screens/GetStartedScreens/GetStartedScreen3";
+import { Dashboard } from "./screens/Dashboard";
 
 export type RootStackParamList = {
     Home: undefined;
@@ -19,6 +20,7 @@ export type RootStackParamList = {
     GetStartedScreen1: undefined;
     GetStartedScreen2: undefined;
     GetStartedScreen3: undefined;
+    Dashboard: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -78,6 +80,7 @@ const App = () => {
                     name="GetStartedScreen3"
                     component={GetStartedScreen3}
                 />
+                <RootStack.Screen name="Dashboard" component={Dashboard} />
             </RootStack.Navigator>
         </NavigationContainer>
     );
