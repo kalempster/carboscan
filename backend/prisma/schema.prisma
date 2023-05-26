@@ -1,0 +1,13 @@
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+
+model Product {
+    id      String @id @default(cuid())
+    name    String  
+    description String
+    carbonFootprint  Float 
+    barcode String @unique
+}
