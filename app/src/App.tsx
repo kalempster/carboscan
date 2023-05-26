@@ -1,16 +1,18 @@
+import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Text } from "react-native";
 import RNBootSplash from "react-native-bootsplash";
-import { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
     NativeStackScreenProps,
     createNativeStackNavigator
 } from "@react-navigation/native-stack";
+import CameraScreen from "./screens/CameraScreen";
+import { useEffect } from "react";
 
-type RootStackParamList = {
+export type RootStackParamList = {
     Home: undefined;
-    Page: undefined;
+    CameraScreen: undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -23,25 +25,12 @@ const Home = ({
             <Text>Hello, world!</Text>
             <Button
                 title="Another page"
-                onPress={() => navigation.navigate("Page")}
+                onPress={() => navigation.navigate("CameraScreen")}
             />
         </SafeAreaView>
     );
 };
 
-const Page = ({
-    navigation
-}: NativeStackScreenProps<RootStackParamList, "Page">) => {
-    return (
-        <SafeAreaView className="flex h-full items-center justify-center bg-white">
-            <Text>Another page</Text>
-            <Button
-                title="Home page"
-                onPress={() => navigation.navigate("Home")}
-            />
-        </SafeAreaView>
-    );
-};
 const App = () => {
     useEffect(() => {
         RNBootSplash.hide({ fade: true });
@@ -56,7 +45,10 @@ const App = () => {
                     animation: "fade_from_bottom"
                 }}>
                 <RootStack.Screen name="Home" component={Home} />
-                <RootStack.Screen name="Page" component={Page} />
+                <RootStack.Screen
+                    name="CameraScreen"
+                    component={CameraScreen}
+                />
             </RootStack.Navigator>
         </NavigationContainer>
     );
