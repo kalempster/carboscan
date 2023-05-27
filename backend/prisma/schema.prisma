@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Token     Token[]
+
+  @@unique([username, email])
+  @@map("users")
+}
+
+model Token {
+  id     String @id @default(cuid())
+  token  String @unique
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@map("tokens")
+}
+
+model Product {
+  id              String @id @default(cuid())
+  name            String
+  description     String
+  imageUrl        String
+  rating          Int
+  carbonFootprint Float
+  barcode         String @unique
+
+  @@map("products")
+}
