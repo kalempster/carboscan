@@ -5,10 +5,12 @@ import { SvgXml } from "react-native-svg";
 import { Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
+import { useTutorialStore } from "../../stores/useTutorialStore";
 
 export const GetStartedScreen3 = ({
     navigation
 }: NativeStackScreenProps<RootStackParamList, "GetStartedScreen3">) => {
+    const tutorialStore = useTutorialStore();
     return (
         <SafeAreaView className="h-full">
             <Header />
@@ -27,7 +29,13 @@ export const GetStartedScreen3 = ({
                 </View>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Dashboard")}
+                    onPress={() => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: "Dashboard" }]
+                        });
+                        tutorialStore.setTutorial(true);
+                    }}
                     activeOpacity={0.68}
                     className="flex rounded-full bg-primary">
                     <Text className="px-10 py-2 font-outfit text-xl text-white">
