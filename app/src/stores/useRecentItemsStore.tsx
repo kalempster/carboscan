@@ -21,9 +21,11 @@ export const useRecentItemsStore = create<ProductStoreType>()(
                 },
                 addProduct(product) {
                     set((state) => {
-                        if (state.products.length + 1 > 3)
-                            state.products.shift();
-                        state.products.push(product);
+                        console.log(state.products);
+                        if (state.products.length + 1 > 3) state.products.pop();
+
+                        state.products.unshift(product);
+
                         return {
                             products: state.products
                         };

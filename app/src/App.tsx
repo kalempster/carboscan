@@ -38,21 +38,25 @@ const Home = ({
     const tutorialStore = useTutorialStore();
     const tutorialHasHydrated = useTutorialStore((state) => state._hasHydrated);
     useEffect(() => {
-        if (tutorialHasHydrated) {
+        (() => {
+            if (!tutorialHasHydrated) return;
             console.log(tutorialHasHydrated);
             console.log(tutorialStore.tutorial);
 
-            if (!tutorialStore.tutorial)
+            if (!tutorialStore.tutorial) {
                 navigation.reset({
                     index: 0,
                     routes: [{ name: "GetStartedScreen1" }]
                 });
-            else
-                navigation.reset({
-                    index: 0,
-                    routes: [{ name: "Dashboard" }]
-                });
-        }
+
+                return RNBootSplash.hide({ fade: true });
+            }
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Dashboard" }]
+            });
+            RNBootSplash.hide({ fade: true });
+        })();
     }, [tutorialHasHydrated]);
 
     return <></>;
@@ -69,10 +73,6 @@ const App = () => {
             ]
         })
     );
-
-    useEffect(() => {
-        RNBootSplash.hide({ fade: true });
-    }, []);
 
     return (
         // eslint-disable-next-line react-native/no-inline-styles
@@ -115,6 +115,9 @@ const App = () => {
                             <RootStack.Screen
                                 name="Dashboard"
                                 component={Dashboard}
+                                options={{
+                                    animation: "fade_from_bottom"
+                                }}
                             />
                         </RootStack.Navigator>
                     </NavigationContainer>
