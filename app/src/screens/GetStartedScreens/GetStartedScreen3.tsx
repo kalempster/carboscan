@@ -1,5 +1,16 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
+//sorry for that xd, but i have 24h to finish this so yeah fuck ts
+//honestly i should've just build in the products into the app
+//and fuck the backend
+//like really
+//i'll create more problems
+//than solutions
+//we'll need to proxy backend to some endpoint
+//and pray it doesn't invalidate
+//and that no one will crash our api xd
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 import Nie from "../../svgs/niewiem.svg";
 import { SvgXml } from "react-native-svg";
 import { Text, TouchableOpacity, View } from "react-native";

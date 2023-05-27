@@ -68,16 +68,16 @@ export const Dashboard = ({
                                 recentItemsStore.products.length > 0 && (
                                     // eslint-disable-next-line react-native/no-inline-styles
                                     <View className="flex" style={{ gap: 12 }}>
-                                        {recentItemsStore.products
-                                            .reverse()
-                                            .map((p, index) => (
+                                        {recentItemsStore.products.map(
+                                            (p, index) => (
                                                 <Product
                                                     key={index}
                                                     title={p.name}
                                                     description={p.description}
                                                     imageUrl={p.imageUrl}
                                                 />
-                                            ))}
+                                            )
+                                        )}
                                     </View>
                                 )}
                             {/* eslint-enable indent */}

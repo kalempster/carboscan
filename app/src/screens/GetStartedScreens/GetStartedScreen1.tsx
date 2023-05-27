@@ -1,5 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 import Tak from "../../svgs/tak.svg";
 import { SvgXml } from "react-native-svg";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -20,8 +22,8 @@ export const GetStartedScreen1 = ({
                             Scan barcodes
                         </Text>
                         <Text className="px-16 text-center font-outfit text-xl text-textSecondary">
-                            Scan products using the scan button, find the
-                            barcode and face it to the camera
+                            Scan products using the scan button, find a barcode
+                            and face it to the camera.
                         </Text>
                     </View>
                 </View>

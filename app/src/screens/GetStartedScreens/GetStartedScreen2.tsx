@@ -1,5 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
 import Nie from "../../svgs/nie.svg";
 import { SvgXml } from "react-native-svg";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -20,8 +22,8 @@ export const GetStartedScreen2 = ({
                             Eco scanning
                         </Text>
                         <Text className="px-16 text-center font-outfit text-xl text-textSecondary">
-                            Help the planet by choosing products with low carbon
-                            footprint
+                            After scanning, our app will tell you if the product
+                            is a good choice with our own rating.
                         </Text>
                     </View>
                 </View>

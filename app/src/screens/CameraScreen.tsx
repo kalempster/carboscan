@@ -8,17 +8,18 @@ import {
     StyleSheet,
     Text,
     Linking,
-    View
+    View,
+    ToastAndroid
 } from "react-native";
 import { Camera, useCameraDevices } from "react-native-vision-camera";
 import { RootStackParamList } from "../App";
 import { BarcodeFormat, useScanBarcodes } from "vision-camera-code-scanner";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ProductSchemaType } from "../../../backend/zod/productSchema";
 import { trpc } from "../utils/trpc";
 import BottomSheet from "@gorhom/bottom-sheet";
 import { useRecentItemsStore } from "../stores/useRecentItemsStore";
 import { Image } from "react-native";
+import { TRPCClientError } from "@trpc/client";
 
 const CameraScreen = ({
     navigation
@@ -30,6 +31,17 @@ const CameraScreen = ({
 
     const handleSheetChanges = useCallback((index: number) => {
         console.log("handleSheetChanges", index);
+        if (index != -1) return;
+
+        console.log("xd");
+
+        setCurrentProduct(null);
+        setProductActive(false);
+        setCameraStopped(false);
+        navigation.reset({
+            index: 0,
+            routes: [{ name: "Dashboard" }]
+        });
     }, []);
 
     const [cameraStopped, setCameraStopped] = useState(false);
@@ -109,13 +121,30 @@ const CameraScreen = ({
         (async () => {
             if (barcodes.length > 0 && barcodes[0].rawValue && !cameraStopped) {
                 setCameraStopped(true);
-                const product = await getProduct.mutateAsync({
-                    barcode: barcodes[0].rawValue
-                });
-                if (!product) return setCameraStopped(false);
-                recentItemsStore.addProduct(product);
-                setProductActive(true);
-                setCurrentProduct(product);
+                try {
+                    const product = await getProduct.mutateAsync({
+                        barcode: barcodes[0].rawValue
+                    });
+                    if (!product) {
+                        setCameraStopped(false);
+                        ToastAndroid.show(
+                            "Item not found in database",
+                            ToastAndroid.SHORT
+                        );
+                        return;
+                    }
+                    recentItemsStore.addProduct(product);
+                    setProductActive(true);
+                    setCurrentProduct(product);
+                } catch (error) {
+                    if (error instanceof TRPCClientError) {
+                        ToastAndroid.show(
+                            "There was an error while getting the product",
+                            ToastAndroid.SHORT
+                        );
+                        setCameraStopped(false);
+                    }
+                }
             }
         })();
     }, [barcodes]);
@@ -129,16 +158,9 @@ const CameraScreen = ({
                 device={device}
                 isActive={!cameraStopped}
                 frameProcessor={!cameraStopped ? frameProcessor : undefined}
-                frameProcessorFps={"auto"}
+                frameProcessorFps={5}
             />
             <BottomSheet
-                onClose={() => {
-                    if (!productActive) return; //Hacky asf but i dont give a fuck xd
-
-                    setCurrentProduct(null);
-                    setProductActive(false);
-                    setCameraStopped(false);
-                }}
                 enablePanDownToClose
                 index={productActive ? 0 : -1}
                 snapPoints={snapPoints}
@@ -161,7 +183,15 @@ const CameraScreen = ({
                             </View>
                             <View className="flex w-full flex-1">
                                 <View className="flex flex-row items-end justify-between">
-                                    <Text className="font-outfit text-4xl font-bold  text-textPrimary">
+                                    <Text
+                                        className={`font-outfit text-4xl font-bold  text-textPrimary ${
+                                            currentProduct?.rating < 33
+                                                ? "text-red-600"
+                                                : currentProduct?.rating > 33 &&
+                                                  currentProduct?.rating < 66
+                                                ? "text-yellow-400"
+                                                : "text-primary"
+                                        }`}>
                                         {/* eslint-disable indent */}
                                         {currentProduct?.rating < 33
                                             ? "Bad"
@@ -188,7 +218,7 @@ const CameraScreen = ({
                                 </Text>
                             </View>
                         </View>
-                        <Text className="font-outfit text-textSecondary">
+                        <Text className="font-outfit text-lg text-textSecondary">
                             {currentProduct?.description}
                         </Text>
                     </View>
