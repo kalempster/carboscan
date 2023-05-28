@@ -1,8 +1,6 @@
 import "react-native-reanimated";
 import "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Text } from "react-native";
-import RNBootSplash from "react-native-bootsplash";
+import { hide } from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
 import {
     NativeStackScreenProps,
@@ -49,13 +47,12 @@ const Home = ({
                     routes: [{ name: "GetStartedScreen1" }]
                 });
 
-                return RNBootSplash.hide({ fade: true });
+                return hide({ fade: true });
             }
             navigation.reset({
                 index: 0,
                 routes: [{ name: "Dashboard" }]
             });
-            RNBootSplash.hide({ fade: true });
         })();
     }, [tutorialHasHydrated]);
 
@@ -86,13 +83,7 @@ const App = () => {
                                 headerShown: false,
                                 animation: "slide_from_right"
                             }}>
-                            <RootStack.Screen
-                                options={{
-                                    animation: "fade_from_bottom"
-                                }}
-                                name="Home"
-                                component={Home}
-                            />
+                            <RootStack.Screen name="Home" component={Home} />
                             <RootStack.Screen
                                 name="CameraScreen"
                                 component={CameraScreen}

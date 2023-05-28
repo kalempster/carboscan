@@ -20,7 +20,10 @@ export const Product = ({
                 />
             </View>
             <View className="flex h-full flex-1">
-                <Text className="font-outfit text-lg text-textPrimary">
+                <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    className="font-outfit text-lg text-textPrimary">
                     {title}
                 </Text>
                 <Text

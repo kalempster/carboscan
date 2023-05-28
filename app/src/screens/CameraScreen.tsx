@@ -211,7 +211,10 @@ const CameraScreen = ({
                                     className="font-outfit text-2xl text-textPrimary">
                                     {currentProduct?.name}
                                 </Text>
-                                <Text className="font-outfit text-textSecondary">
+                                <Text
+                                    ellipsizeMode="tail"
+                                    numberOfLines={3}
+                                    className="font-outfit text-textSecondary">
                                     This company emitted around{" "}
                                     {currentProduct?.carbonFootprint} grams CO2e
                                     to manufacture this product.

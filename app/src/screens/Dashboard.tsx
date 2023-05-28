@@ -19,12 +19,18 @@ import { RootStackParamList } from "../App";
 import { Header } from "../components/Header";
 import { useRecentItemsStore } from "../stores/useRecentItemsStore";
 import { Product } from "../components/Product";
+import { useEffect } from "react";
+import { hide } from "react-native-bootsplash";
 export const Dashboard = ({
     navigation
 }: NativeStackScreenProps<RootStackParamList, "Dashboard">) => {
     const insets = useSafeAreaInsets();
 
     const recentItemsStore = useRecentItemsStore();
+
+    useEffect(() => {
+        hide({ fade: true });
+    }, []);
 
     return (
         <>

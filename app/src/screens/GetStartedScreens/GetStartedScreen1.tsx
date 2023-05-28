@@ -7,10 +7,16 @@ import { SvgXml } from "react-native-svg";
 import { Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../App";
+import { useEffect } from "react";
+import { hide } from "react-native-bootsplash";
 
 export const GetStartedScreen1 = ({
     navigation
 }: NativeStackScreenProps<RootStackParamList, "GetStartedScreen1">) => {
+    useEffect(() => {
+        hide({ fade: true });
+    }, []);
+
     return (
         <SafeAreaView className="h-full">
             <Header />
